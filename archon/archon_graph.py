@@ -136,11 +136,7 @@ async def advisor_with_examples(state: AgentState):
             file_list.append(file_path)
     
     # Then, prompt the advisor with the list of files it can use for examples and tools
-    deps = AdvisorDeps(
-        file_list=file_list,
-        api_key=api_key,
-        base_url=base_url
-    )
+    deps = AdvisorDeps(file_list=file_list)
     result = await advisor_agent.run(state['latest_user_message'], deps=deps)
     advisor_output = result.data
     
@@ -153,9 +149,7 @@ async def coder_agent(state: AgentState, writer):
         supabase=supabase,
         embedding_client=embedding_client,
         reasoner_output=state['scope'],
-        advisor_output=state['advisor_output'],
-        api_key=api_key,
-        base_url=base_url
+        advisor_output=state['advisor_output']
     )
 
     # Get the message history into the format for Pydantic AI
